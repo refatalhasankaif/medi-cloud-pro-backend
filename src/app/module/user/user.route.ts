@@ -8,3 +8,4 @@ router.post("/create-doctor", userController.createDoctor)
 // router.post("/create-superadmin", userController.createSuperAdmin)
 
 export const userRoutes = router;
+ 
