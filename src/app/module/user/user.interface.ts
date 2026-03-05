@@ -6,7 +6,7 @@ export interface ICreateDoctorPayload {
         name: string;
         email: string;
         profilePhoto?: string;
-        contactNumber?: string;
+        contactNumber: string;
         address?: string;
         registrationNumber: string;
         experience: number;

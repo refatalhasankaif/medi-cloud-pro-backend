@@ -3,7 +3,7 @@ model Doctor {
     name                String
     email               String            @unique
     profilePhoto        String?
-    contactNumber       String?
+    contactNumber       String
     address             String?
     isDeleted           Boolean           @default(false)
     deletedAt           DateTime?
