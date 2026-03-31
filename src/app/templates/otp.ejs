@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Email Verification – MediCloudPro</title>
+    <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #1a2b3c;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .email-wrapper {
+            width: 100%;
+            background-color: #f0f4f8;
+            padding: 40px 16px;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(8, 92, 142, 0.12);
+        }
+
+        /* ── HEADER ── */
+        .header {
+            background: linear-gradient(135deg, #085c8e 0%, #0a70ac 60%, #085c8e 100%);
+            padding: 36px 40px 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(123, 184, 69, 0.12);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .logo-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 6px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: #fff;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+        }
+
+        .brand-name {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 26px;
+            font-weight: 400;
+            color: #ffffff;
+            letter-spacing: 0.3px;
+        }
+
+        .brand-name span {
+            color: #7bb845;
+        }
+
+        .header-tagline {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.65);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* ── BODY ── */
+        .body {
+            background: #ffffff;
+            padding: 44px 48px;
+        }
+
+        .greeting {
+            font-size: 22px;
+            font-weight: 600;
+            color: #085c8e;
+            margin-bottom: 12px;
+        }
+
+        .intro-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #4a5568;
+            margin-bottom: 32px;
+        }
+
+        /* ── OTP BLOCK ── */
+        .otp-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: #7bb845;
+            margin-bottom: 12px;
+        }
+
+        .otp-container {
+            background: linear-gradient(145deg, #f7fbff 0%, #eef6ff 100%);
+            border: 2px solid #085c8e;
+            border-radius: 14px;
+            padding: 28px 24px;
+            text-align: center;
+            margin-bottom: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .otp-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #7bb845, #085c8e);
+            border-radius: 14px 0 0 14px;
+        }
+
+        .otp-digits {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .otp-digit {
+            display: inline-block;
+            width: 48px;
+            height: 58px;
+            line-height: 58px;
+            text-align: center;
+            background: #ffffff;
+            border: 1.5px solid #d1e8f5;
+            border-radius: 10px;
+            font-family: 'DM Sans', monospace;
+            font-size: 26px;
+            font-weight: 600;
+            color: #085c8e;
+            box-shadow: 0 2px 8px rgba(8, 92, 142, 0.08);
+        }
+
+        .otp-separator {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #7bb845;
+            display: inline-block;
+            margin: 0 2px;
+        }
+
+        .otp-expiry {
+            font-size: 12.5px;
+            color: #718096;
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .expiry-badge {
+            display: inline-block;
+            background: #fff7ed;
+            border: 1px solid #fbd38d;
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #c05621;
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            border: none;
+            border-top: 1px solid #e8f0f7;
+            margin: 32px 0;
+        }
+
+        /* ── INFO BOX ── */
+        .info-box {
+            background: #f0fde8;
+            border-left: 4px solid #7bb845;
+            border-radius: 0 10px 10px 0;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+        }
+
+        .info-box p {
+            font-size: 13.5px;
+            line-height: 1.65;
+            color: #3a5a1e;
+        }
+
+        .info-box strong {
+            color: #2d7a0e;
+        }
+
+        /* ── STEPS ── */
+        .steps-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #085c8e;
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
+        }
+
+        .steps {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 32px;
+        }
+
+        .steps li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 13.5px;
+            color: #4a5568;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .step-num {
+            min-width: 22px;
+            height: 22px;
+            background: #085c8e;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        /* ── FOOTER NOTE ── */
+        .security-note {
+            background: #fff8f8;
+            border: 1px solid #fed7d7;
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-size: 13px;
+            color: #742a2a;
+            line-height: 1.6;
+        }
+
+        .security-note strong {
+            color: #c53030;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background: #085c8e;
+            padding: 28px 40px;
+            text-align: center;
+        }
+
+        .footer-brand {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 8px;
+        }
+
+        .footer-brand span {
+            color: #7bb845;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 12px 0;
+        }
+
+        .footer-links a {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            transition: color 0.2s;
+        }
+
+        .footer-meta {
+            font-size: 11.5px;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.6;
+            margin-top: 12px;
+        }
+
+        .footer-accent-line {
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, #7bb845, #085c8e);
+            border-radius: 2px;
+            margin: 14px auto 0;
+        }
+
+        @media (max-width: 480px) {
+            .body {
+                padding: 32px 24px;
+            }
+
+            .header {
+                padding: 28px 24px 24px;
+            }
+
+            .footer {
+                padding: 24px 20px;
+            }
+
+            .otp-digit {
+                width: 38px;
+                height: 48px;
+                line-height: 48px;
+                font-size: 22px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="email-wrapper">
+        <table class="email-container" width="100%" cellpadding="0" cellspacing="0" role="presentation">
+
+            <!-- HEADER -->
+            <tr>
+                <td class="header">
+                        <span class="brand-name">Medi<span>Cloud</span>Pro</span>
+                    </div>
+                    <p class="header-tagline">Healthcare at your fingertips</p>
+                </td>
+            </tr>
+
+            <!-- BODY -->
+            <tr>
+                <td class="body">
+
+                    <p class="greeting">Hello, <%= name %></p>
+                    <p class="intro-text">
+                        Thank you for useing <strong>MediCloudPro</strong>. To complete your email
+                        verification and activate your account, please use the one-time passcode below.
+                    </p>
+
+                    <!-- OTP BLOCK -->
+                    <p class="otp-label">&#x2022; Your Verification Code</p>
+                    <div class="otp-container">
+                        <div class="otp-digits">
+                            <% const otpStr=String(otp); const half=Math.ceil(otpStr.length / 2); const
+                                firstHalf=otpStr.slice(0, half); const secondHalf=otpStr.slice(half); %>
+                                <% for (let i=0; i < firstHalf.length; i++) { %>
+                                    <span class="otp-digit">
+                                        <%= firstHalf[i] %>
+                                    </span>
+                                    <% } %>
+                                        <span class="otp-separator"></span>
+                                        <% for (let i=0; i < secondHalf.length; i++) { %>
+                                            <span class="otp-digit">
+                                                <%= secondHalf[i] %>
+                                            </span>
+                                            <% } %>
+                        </div>
+
+                        <div class="otp-expiry">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="7" cy="7" r="6" stroke="#c05621" stroke-width="1.4" />
+                                <path d="M7 4v3.5L9 9" stroke="#c05621" stroke-width="1.4" stroke-linecap="round" />
+                            </svg>
+                            This code expires in &nbsp;<span class="expiry-badge">5 minutes</span>
+                        </div>
+                    </div>
+
+                    <hr class="divider" />
+
+                    <!-- INFO BOX -->
+                    <div class="info-box">
+                        <p>
+                            <strong>Verifying for:</strong>
+                            <%= email %><br />
+                                Enter this code on the verification page to activate your MediCloudPro account. Do not
+                                share this code with anyone.
+                        </p>
+                    </div>
+
+                    <!-- STEPS -->
+                    <p class="steps-title">HOW TO VERIFY</p>
+                    <ul class="steps">
+                        <li>
+                            <span class="step-num">1</span>
+                            <span>Return to the <strong>MediCloudPro</strong> app or verification page.</span>
+                        </li>
+                        <li>
+                            <span class="step-num">2</span>
+                            <span>Enter the 7-digit code exactly as shown above.</span>
+                        </li>
+                        <li>
+                            <span class="step-num">3</span>
+                            <span>Once verified, your account will be activated and you can sign in.</span>
+                        </li>
+                    </ul>
+
+                    <!-- SECURITY NOTE -->
+                    <div class="security-note">
+                        <strong>&#x26A0; Didn't request this?</strong> If you did not create a MediCloudPro account, you
+                        can safely ignore this email. Your account security is our priority — never share this code with
+                        anyone, including MediCloudPro support.
+                    </div>
+
+                </td>
+            </tr>
+
+            <!-- FOOTER -->
+            <tr>
+                <td class="footer">
+                    <p class="footer-brand">Medi<span>Cloud</span>Pro</p>
+                    <p class="footer-meta">
+                        &copy; <%= new Date().getFullYear() %> MediCloudPro. All rights reserved.<br />
+                            This is an automated message — please do not reply to this email.
+                    </p>
+                    <div class="footer-accent-line"></div>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</body>
+
+</html>

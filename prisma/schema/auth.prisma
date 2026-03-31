@@ -1,21 +1,21 @@
 model User {
-  id                 String     @id
-  name               String
-  email              String
-  emailVerified      Boolean    @default(false)
-  role               Role       @default(PATIENT)
-  status             UserStatus @default(ACTIVE)
-  needPasswordChange Boolean    @default(false)
-  isDeleted          Boolean    @default(false)
-  deletedAt          DateTime?
-  image              String?
-  createdAt          DateTime   @default(now())
-  updatedAt          DateTime   @updatedAt
-  sessions           Session[]
-  accounts           Account[]
-  patient            Patient?
-  doctor             Doctor?
-  admin              Admin?
+    id                 String     @id
+    name               String
+    email              String
+    emailVerified      Boolean    @default(false)
+    role               Role       @default(PATIENT)
+    status             UserStatus @default(ACTIVE)
+    needPasswordChange Boolean    @default(false)
+    isDeleted          Boolean    @default(false)
+    deletedAt          DateTime?
+    image              String?
+    createdAt          DateTime   @default(now())
+    updatedAt          DateTime   @updatedAt
+    sessions           Session[]
+    accounts           Account[]
+    patient            Patient?
+    doctor             Doctor?
+    admin              Admin?
 
     @@unique([email])
     @@map("user")
@@ -59,7 +59,7 @@ model Account {
 
 model Verification {
     id         String   @id
-    identifier String
+    identifier String   @unique
     value      String
     expiresAt  DateTime
     createdAt  DateTime @default(now())

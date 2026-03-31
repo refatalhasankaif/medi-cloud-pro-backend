@@ -277,9 +277,34 @@ const logoutUser = async (sessionToken: string) => {
             Authorization: `Bearer ${sessionToken}`
         })
     })
-    
+
     return result;
 }
+
+const verifyEmail = async (email: string, otp: string) => {
+    const result = await auth.api.verifyEmailOTP({
+        body: {
+            email,
+            otp,
+        }
+    })
+
+    if (result.status && !result.user.emailVerified) {
+        await prisma.user.update({
+            where: {
+                id: result.user.id,
+            },
+            data: {
+                emailVerified: true,
+            }
+        })
+    } else if (!result.status) {
+        throw new AppError(status.BAD_REQUEST, `Failed to verify email.`)
+    }
+
+    return result;
+}
+
 
 
 export const authService = {
@@ -289,4 +314,5 @@ export const authService = {
     getNewToken,
     changePassword,
     logoutUser,
+    verifyEmail
 }
