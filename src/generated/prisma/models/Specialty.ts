@@ -179,7 +179,7 @@ export type SpecialtyGroupByOutputType = {
   _max: SpecialtyMaxAggregateOutputType | null
 }
 
-type GetSpecialtyGroupByPayload<T extends SpecialtyGroupByArgs> = Prisma.PrismaPromise<
+export type GetSpecialtyGroupByPayload<T extends SpecialtyGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<SpecialtyGroupByOutputType, T['by']> &
       {
@@ -1184,6 +1184,11 @@ export type SpecialtyFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Skip the first `n` Specialties.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Specialties.
+   */
   distinct?: Prisma.SpecialtyScalarFieldEnum | Prisma.SpecialtyScalarFieldEnum[]
 }
 

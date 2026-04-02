@@ -4,7 +4,7 @@ import status from "http-status";
 import { IUpdateAdminPayload } from "./admin.interface";
 import { IRequestUser } from "../../interfaces/requestUserInterface";
 
-const getAllAdmins = async() => {
+const getAllAdmins = async () => {
     const admins = await prisma.admin.findMany({
         where: {
             isDeleted: false,
@@ -16,12 +16,12 @@ const getAllAdmins = async() => {
             createdAt: 'desc',
         }
     })
-    return admins;  
+    return admins;
 }
 
-const getAdminById = async(id: string) => {
+const getAdminById = async (id: string) => {
     const admin = await prisma.admin.findUnique({
-        where: { 
+        where: {
             id,
             isDeleted: false,
         },
@@ -37,7 +37,7 @@ const getAdminById = async(id: string) => {
     return admin;
 }
 
-const updateAdmin = async(id: string, payload: IUpdateAdminPayload) => {
+const updateAdmin = async (id: string, payload: IUpdateAdminPayload) => {
     const existingAdmin = await prisma.admin.findUnique({
         where: { id, isDeleted: false }
     })
@@ -57,7 +57,7 @@ const updateAdmin = async(id: string, payload: IUpdateAdminPayload) => {
     return updatedAdmin;
 }
 
-const softDeleteAdmin = async(id: string, user: IRequestUser) => {
+const softDeleteAdmin = async (id: string, user: IRequestUser) => {
     const admin = await prisma.admin.findUnique({
         where: { id }
     })
@@ -66,7 +66,7 @@ const softDeleteAdmin = async(id: string, user: IRequestUser) => {
         throw new AppError(status.NOT_FOUND, "Admin not found");
     }
 
-    if(admin.userId === user.userId) {
+    if (admin.userId === user.userId) {
         throw new AppError(status.BAD_REQUEST, "You cannot delete your own admin account");
     }
 
@@ -89,5 +89,5 @@ export const adminService = {
     getAllAdmins,
     getAdminById,
     updateAdmin,
-    softDeleteAdmin,
+    softDeleteAdmin
 }

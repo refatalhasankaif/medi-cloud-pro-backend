@@ -244,6 +244,17 @@ const changePassword = async (payload: IChangePasswordPayload, sessionToken: str
         })
     })
 
+    if (session.user.needPasswordChange) {
+        await prisma.user.update({
+            where: {
+                id: session.user.id,
+            },
+            data: {
+                needPasswordChange: false,
+            }
+        })
+    }
+
     const accessToken = tokenUtils.getAccessToken({
         userId: session.user.id,
         role: session.user.role,
@@ -305,7 +316,63 @@ const verifyEmail = async (email: string, otp: string) => {
     return result;
 }
 
+const forgetPassword = async (email: string) => {
+    const user = await prisma.user.findUnique({
+        where: { email },
+    })
 
+    if (!user) {
+        throw new AppError(status.NOT_FOUND, "User not found");
+    }
+
+    if (!user.emailVerified) {
+        throw new AppError(status.BAD_REQUEST, "Email is not verified");
+    }
+
+    if (user.status === UserStatus.INACTIVE || user.status === UserStatus.SUSPENDED || user.isDeleted === true) {
+        throw new AppError(status.BAD_REQUEST, "User account is not active");
+    }
+
+    await auth.api.requestPasswordResetEmailOTP({
+        body: {
+            email,
+        }
+    });
+}
+
+const resetPassword = async (email: string, otp: string, newPassword: string) => {
+
+    const user = await prisma.user.findUnique({
+        where: { email },
+    })
+
+    if (!user) {
+        throw new AppError(status.NOT_FOUND, "User not found");
+    }
+
+    if (!user.emailVerified) {
+        throw new AppError(status.BAD_REQUEST, "Email is not verified");
+    }
+
+    if (user.status === UserStatus.INACTIVE || user.status === UserStatus.SUSPENDED || user.isDeleted === true) {
+        throw new AppError(status.BAD_REQUEST, "User account is not active");
+    }
+
+    await auth.api.resetPasswordEmailOTP({
+        body: {
+            email,
+            otp,
+            password: newPassword,
+        }
+    })
+
+    await prisma.session.deleteMany({
+        where: {
+            userId: user.id
+        }
+    })
+
+}
 
 export const authService = {
     registerPatient,
@@ -314,5 +381,7 @@ export const authService = {
     getNewToken,
     changePassword,
     logoutUser,
-    verifyEmail
+    verifyEmail,
+    forgetPassword,
+    resetPassword,
 }

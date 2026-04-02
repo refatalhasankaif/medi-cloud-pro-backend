@@ -59,7 +59,7 @@ model Account {
 
 model Verification {
     id         String   @id
-    identifier String   @unique
+    identifier String   
     value      String
     expiresAt  DateTime
     createdAt  DateTime @default(now())

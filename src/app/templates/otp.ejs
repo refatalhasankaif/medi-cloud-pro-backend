@@ -387,103 +387,100 @@
             <!-- HEADER -->
             <tr>
                 <td class="header">
-                        <span class="brand-name">Medi<span>Cloud</span>Pro</span>
-                    </div>
-                    <p class="header-tagline">Healthcare at your fingertips</p>
-                </td>
-            </tr>
+                    <span class="brand-name">Medi<span>Cloud</span>Pro</span>
+    </div>
+    <p class="header-tagline">Healthcare at your fingertips</p>
+    </td>
+    </tr>
 
-            <!-- BODY -->
-            <tr>
-                <td class="body">
+    <!-- BODY -->
+    <tr>
+        <td class="body">
 
-                    <p class="greeting">Hello, <%= name %></p>
-                    <p class="intro-text">
-                        Thank you for useing <strong>MedicareCloudPro</strong>. To complete your email
-                        verification and activate your account, please use the one-time passcode below.
-                    </p>
+            <p class="greeting">Hello, <%= name %>
+            </p>
+            <p class="intro-text">
+                Thank you for useing <strong>MedicareCloudPro</strong>. To complete your email
+                verification and activate your account, please use the one-time passcode below.
+            </p>
 
-                    <!-- OTP BLOCK -->
-                    <p class="otp-label">&#x2022; Your Verification Code</p>
-                    <div class="otp-container">
-                        <div class="otp-digits">
-                            <% const otpStr=String(otp); const half=Math.ceil(otpStr.length / 2); const
-                                firstHalf=otpStr.slice(0, half); const secondHalf=otpStr.slice(half); %>
-                                <% for (let i=0; i < firstHalf.length; i++) { %>
+            <!-- OTP BLOCK -->
+            <p class="otp-label">&#x2022; Your Verification Code</p>
+            <div class="otp-container">
+                <div class="otp-digits">
+                    <% const otpStr=String(otp).padStart(6, '0' ); %>
+                        <% for (let i=0; i < 3; i++) { %>
+                            <span class="otp-digit">
+                                <%= otpStr[i] %>
+                            </span>
+                            <% } %>
+                                <span class="otp-separator"></span>
+                                <% for (let i=3; i < 6; i++) { %>
                                     <span class="otp-digit">
-                                        <%= firstHalf[i] %>
+                                        <%= otpStr[i] %>
                                     </span>
                                     <% } %>
-                                        <span class="otp-separator"></span>
-                                        <% for (let i=0; i < secondHalf.length; i++) { %>
-                                            <span class="otp-digit">
-                                                <%= secondHalf[i] %>
-                                            </span>
-                                            <% } %>
-                        </div>
+                </div>
 
-                        <div class="otp-expiry">
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="7" cy="7" r="6" stroke="#c05621" stroke-width="1.4" />
-                                <path d="M7 4v3.5L9 9" stroke="#c05621" stroke-width="1.4" stroke-linecap="round" />
-                            </svg>
-                            This code expires in &nbsp;<span class="expiry-badge">5 minutes</span>
-                        </div>
-                    </div>
+                <div class="otp-expiry">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="7" cy="7" r="6" stroke="#c05621" stroke-width="1.4" />
+                        <path d="M7 4v3.5L9 9" stroke="#c05621" stroke-width="1.4" stroke-linecap="round" />
+                    </svg>
+                    This code expires in &nbsp;<span class="expiry-badge">5 minutes</span>
+                </div>
+            </div>
 
-                    <hr class="divider" />
+            <!-- INFO BOX -->
+            <div class="info-box">
+                <p>
+                    <strong>Verifying for:</strong>
+                    <%= email %><br />
+                        Enter this code on the verification page to activate your MedicareCloudPro account. Do not
+                        share this code with anyone.
+                </p>
+            </div>
 
-                    <!-- INFO BOX -->
-                    <div class="info-box">
-                        <p>
-                            <strong>Verifying for:</strong>
-                            <%= email %><br />
-                                Enter this code on the verification page to activate your MedicareCloudPro account. Do not
-                                share this code with anyone.
-                        </p>
-                    </div>
+            <!-- STEPS -->
+            <p class="steps-title">HOW TO VERIFY</p>
+            <ul class="steps">
+                <li>
+                    <span class="step-num">1</span>
+                    <span>Return to the <strong>MedicareCloudPro</strong> app or verification page.</span>
+                </li>
+                <li>
+                    <span class="step-num">2</span>
+                    <span>Enter the 6-digit code exactly as shown above.</span>
+                </li>
+                <li>
+                    <span class="step-num">3</span>
+                    <span>Once verified, your account will be activated and you can sign in.</span>
+                </li>
+            </ul>
 
-                    <!-- STEPS -->
-                    <p class="steps-title">HOW TO VERIFY</p>
-                    <ul class="steps">
-                        <li>
-                            <span class="step-num">1</span>
-                            <span>Return to the <strong>MedicareCloudPro</strong> app or verification page.</span>
-                        </li>
-                        <li>
-                            <span class="step-num">2</span>
-                            <span>Enter the 7-digit code exactly as shown above.</span>
-                        </li>
-                        <li>
-                            <span class="step-num">3</span>
-                            <span>Once verified, your account will be activated and you can sign in.</span>
-                        </li>
-                    </ul>
+            <!-- SECURITY NOTE -->
+            <div class="security-note">
+                <strong>&#x26A0; Didn't request this?</strong> If you did not create a MedicareCloudPro account, you
+                can safely ignore this email. Your account security is our priority — never share this code with
+                anyone, including MedicareCloudPro support.
+            </div>
 
-                    <!-- SECURITY NOTE -->
-                    <div class="security-note">
-                        <strong>&#x26A0; Didn't request this?</strong> If you did not create a MedicareCloudPro account, you
-                        can safely ignore this email. Your account security is our priority — never share this code with
-                        anyone, including MedicareCloudPro support.
-                    </div>
+        </td>
+    </tr>
 
-                </td>
-            </tr>
+    <!-- FOOTER -->
+    <tr>
+        <td class="footer">
+            <p class="footer-brand">Medi<span>Cloud</span>Pro</p>
+            <p class="footer-meta">
+                &copy; <%= new Date().getFullYear() %> MedicareCloudPro. All rights reserved.<br />
+                    This is an automated message — please do not reply to this email.
+            </p>
+            <div class="footer-accent-line"></div>
+        </td>
+    </tr>
 
-            <!-- FOOTER -->
-            <tr>
-                <td class="footer">
-                    <p class="footer-brand">Medi<span>Cloud</span>Pro</p>
-                    <p class="footer-meta">
-                        &copy; <%= new Date().getFullYear() %> MedicareCloudPro. All rights reserved.<br />
-                            This is an automated message — please do not reply to this email.
-                    </p>
-                    <div class="footer-accent-line"></div>
-                </td>
-            </tr>
-
-        </table>
+    </table>
     </div>
 </body>
 
