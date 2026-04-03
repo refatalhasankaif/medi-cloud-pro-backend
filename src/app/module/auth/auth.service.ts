@@ -366,6 +366,17 @@ const resetPassword = async (email: string, otp: string, newPassword: string) =>
         }
     })
 
+    if (user.needPasswordChange) {
+        await prisma.user.update({
+            where: {
+                id: user.id,
+            },
+            data: {
+                needPasswordChange: false,
+            }
+        })
+    }
+
     await prisma.session.deleteMany({
         where: {
             userId: user.id
@@ -373,6 +384,47 @@ const resetPassword = async (email: string, otp: string, newPassword: string) =>
     })
 
 }
+
+const googleLogin = async () => { }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const googleLoginSuccess = async (session: Record<string, any>) => {
+
+    const isPatientExist = await prisma.patient.findUnique({
+        where: {
+            userId: session.user.id
+        }
+    })
+
+    if (!isPatientExist) {
+        await prisma.patient.create({
+            data: {
+                userId: session.user.id,
+                name: session.user.name,
+                email: session.user.email
+            }
+        })
+    }
+
+    const accessToken = tokenUtils.getAccessToken({
+        userId: session.user.id,
+        name: session.user.name,
+        email: session.user.email
+    })
+
+    const refreshToken = tokenUtils.getRefreshToken({
+        userId: session.user.id,
+        name: session.user.name,
+        email: session.user.email
+    })
+
+    return {
+        accessToken,
+        refreshToken,
+    }
+}
+
+const googleLoginFailure = async () => { }
 
 export const authService = {
     registerPatient,
@@ -384,4 +436,7 @@ export const authService = {
     verifyEmail,
     forgetPassword,
     resetPassword,
+    googleLogin,
+    googleLoginSuccess,
+    googleLoginFailure,
 }
